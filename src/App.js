@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Document, Page, pdfjs } from "react-pdf";
+import { useEffect } from 'react';
+import SinglePage from './singlepage';
+import AllPages from './allpages';
+import samplePDF from "./Welcome.pdf";
 
-function App() {
+const App = () => {
+  useEffect(() => { pdfjs.GlobalWorkerOptions.workerSrc =`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;});
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h4>Single Page</h4>
+      <SinglePage pdf={samplePDF} />
     </div>
   );
 }
