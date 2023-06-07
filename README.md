@@ -9,6 +9,16 @@ The Learning Portal/Teaching Gate is a web application designed to assist teache
 - Interactive learning activities (Future plan): In the future, additional features will be implemented to support various interactive learning activities, such as quizzes, interactive exercises, and collaborative workspaces.
 - User-friendly interface: The interface is designed to be intuitive and easy to navigate, ensuring a seamless experience for teachers and students.
 
+## Initial Design
+
+![1](https://github.com/GordonJooste/LearningPortal/assets/36758272/b1bd4fbb-d932-4603-a654-b3f1756e9714)
+![2](https://github.com/GordonJooste/LearningPortal/assets/36758272/b7bd19e4-e19d-40b0-9175-a2ce7c6896c7)
+![3](https://github.com/GordonJooste/LearningPortal/assets/36758272/799a7eae-6832-436a-b573-b2a160bff4ab)
+
+- From the design we can see quite a few of the feature ideas not listed in features yet. Hopefully as time goes on we'll get to a point where all of these are working as intended.
+
+
+
 ## Installation
 
 1. Clone the repository:
