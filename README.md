@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# Learning Portal/Teaching Gate
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Learning Portal/Teaching Gate is a web application designed to assist teachers in improving their learning environment and facilitating the delivery of educational materials to students. The primary functionality of the web app is to display PDF files and provide a drawing tool for users to annotate and interact with the content.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Display PDF files: Users can upload and view PDF files within the web application.
+- Drawing tools: The web app provides a set of drawing tools that allow users to annotate the PDF files, make highlights, add notes, and draw on top of the content.
+- Interactive learning activities (Future plan): In the future, additional features will be implemented to support various interactive learning activities, such as quizzes, interactive exercises, and collaborative workspaces.
+- User-friendly interface: The interface is designed to be intuitive and easy to navigate, ensuring a seamless experience for teachers and students.
 
-### `npm start`
+## Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. Clone the repository:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. Navigate to the project directory:
 
-### `npm test`
+3. Install dependencies:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. Start the development server:
 
-### `npm run build`
+5. Open your browser and visit `http://localhost:3000` to access the learning portal.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Usage
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Sign up or log in with your account credentials.
+2. Upload a PDF file using the provided upload functionality.
+3. Once uploaded, the PDF file will be displayed on the screen.
+4. Utilize the drawing tools to annotate, highlight, add notes, or draw on top of the PDF content.
+5. Save or export the annotated PDF for future reference or sharing.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Contributing
 
-### `npm run eject`
+Contributions to the Learning Portal/Teaching Gate project are welcome. If you'd like to contribute, please follow these steps:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Fork the repository.
+2. Create a new branch for your feature/bug fix.
+3. Make your changes and commit them with descriptive commit messages.
+4. Push your changes to your forked repository.
+5. Submit a pull request detailing your changes.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## License
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+This project is licensed under the [Creative Commons Attribution-NonCommercial (CC BY-NC) license](https://creativecommons.org/licenses/by-nc/).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Acknowledgements
 
-## Learn More
+We would like to express our gratitude to the following resources and libraries that have been instrumental in the development of the Learning Portal/Teaching Gate:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [React](https://reactjs.org/)
+- [PDF.js](https://mozilla.github.io/pdf.js/)
+- [ChatGPT](chat.openai.com)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Contact
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For any questions, suggestions, or support, please feel free to contact me at [jooste44@gmail.com](mailto:jooste44@gmail.com).
