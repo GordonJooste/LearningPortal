@@ -95,7 +95,7 @@ const Canvas = ({ width, height }) => {
     }
   };
 
-  return <canvas ref={canvasRef} height={height} width={width} />;
+  return <canvas className='Canvas' ref={canvasRef} height={height} width={width} />;
 };
 
 Canvas.defaultProps = {

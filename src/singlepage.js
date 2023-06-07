@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Document, Page } from "react-pdf";
-import './singlepagestyles.css';
+import './App.css';
+import Canvas from "./Canvas";
 
 //import "react-pdf/dist/esm/Page/TextLayer.css";
 
@@ -27,15 +28,17 @@ export default function SinglePage(props) {
   const { pdf } = props;
 
   return (
-    <div>
+    <div className="SinglePage">
+      
       <Document
+        className="Document"
         file={pdf}
         options={{ workerSrc: "/pdf.worker.js" }}
         onLoadSuccess={onDocumentLoadSuccess}
       >
-        <Page pageNumber={pageNumber} renderTextLayer={false} />
+        <Page className = "Page" pageNumber={pageNumber} renderTextLayer={false} />
       </Document>
-      <div>
+      <div className="NextPrev">
         <p>
           Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}
         </p>

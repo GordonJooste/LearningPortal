@@ -1,38 +1,27 @@
-.App {
-  text-align: center;
+.react-pdf__Page__annotations{
+  --scale-factor: 0;
+}/* use this to hide the annotation layer otherwise it takes up lots of space on the page*/
+
+
+.Document {
+  position: relative;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Canvas {
+position: absolute;
+top: 0;
+left: 0;
+z-index: 2; /* Adjust the z-index to control the stacking order */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.react-pdf__Page {
+position: absolute;
+top: 0;
+left: 0;
+z-index: 1; /* Adjust the z-index to control the stacking order */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.NextPrev {
+  position: absolute;
+  z-index: 3;
 }
