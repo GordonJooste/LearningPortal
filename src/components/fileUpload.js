@@ -1,11 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
-/*import { uploadFile } from '../store/actions';
+import { useDispatch } from 'react-redux';
+import { uploadFile } from '../fileupload/fileUploadSlice';
 
-function FileUploader({ uploadFile }) {
+function FileUploader() {
+  const dispatch = useDispatch();
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    uploadFile(file);
+    const filePath = URL.createObjectURL(file); // Generate a URL for the file
+    dispatch(uploadFile(filePath));
   };
 
   return (
@@ -15,5 +18,4 @@ function FileUploader({ uploadFile }) {
   );
 }
 
-export default connect(null, { uploadFile })(FileUploader);
-*/
+export default FileUploader;

@@ -7,15 +7,17 @@ import samplePDF from "./Welcome.pdf";
 import Canvas from './components/Canvas';
 import FileUpload from './components/fileUpload';
 import { Counter } from './counter/counter';
+import { useSelector } from 'react-redux';
 
 const App = () => {
   useEffect(() => { pdfjs.GlobalWorkerOptions.workerSrc =`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;});
+  const uploadedFilePath = useSelector((state) => state.fileUpload.uploadedFilePath);
 
   return (
     <div className="App">
       <h4>Single Page</h4>      
       
-      <Counter/>
+      <FileUpload />
     </div>
 
 
