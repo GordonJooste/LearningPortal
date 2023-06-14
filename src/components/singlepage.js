@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Document, Page } from "react-pdf";
-import './App.css';
+import '../App.css';
 import Canvas from "./Canvas";
 
 //import "react-pdf/dist/esm/Page/TextLayer.css";
