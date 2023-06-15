@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 
 const App = () => {
   useEffect(() => { pdfjs.GlobalWorkerOptions.workerSrc =`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;});
-  const uploadedFilePath = useSelector((state) => state.fileUpload.uploadedFilePath);
+  const uploadedFile = useSelector((state) => state.fileUpload.uploadedFile);
 
   return (
     <div className="App">
