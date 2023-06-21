@@ -15,8 +15,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <h4>Single Page</h4>      
-      
+      <h4>Single Page</h4>
       <FileUpload />
     </div>
 

@@ -12,13 +12,6 @@ const fileUploadSlice = createSlice({
   reducers: {
     uploadFile: (state, action) => {
       state.uploadedFile = action.payload;
-      const data = new FormData()
-      data.append('file', action.payload)
-    axios.post("http://localhost:8000/upload", data, { 
-       // receive two    parameter endpoint url ,form data
-    }).then(res => { // then print response status
-     console.log(res.statusText)
-    })
     },
   },
 });
