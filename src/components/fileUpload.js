@@ -1,34 +1,44 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { useDispatch } from 'react-redux';
 import { uploadFile } from '../fileupload/fileUploadSlice';
 import axios from 'axios';
 
-
-function FileUploader() {
-  const dispatch = useDispatch();
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    console.log(file);
-    dispatch(uploadFile(file));
-    
-  };
-
-  const handleSubmit = (event) =>{
-    event.preventDefault();
-    
+export default class FileUpload extends Component {
+  constructor(props) {
+      super(props);
+      this.onFileChange = this.onFileChange.bind(this);
+      this.onSubmit = this.onSubmit.bind(this);
+      this.state = {
+          profileImg: ''
+      }
+  }
+  onFileChange(e) {
+      this.setState({ profileImg: e.target.files[0] })
+  }
+  onSubmit(e) {
+      e.preventDefault()
+      const formData = new FormData()
+      formData.append('profileImg', this.state.profileImg)
+      axios.post("http://localhost:4000/api/user-profile", formData, {
+      }).then(res => {
+          console.log(res)
+      })
   }
 
-  
-
-  return (
-    <div className='container'>
-      <form className='form-group' >
-        <input id="file" name="file" type="file" onChange={handleFileChange} />
-        <button className='btn btn-primary' type='submit' >Upload</button>
-      </form>      
-    </div>
-  );
+  render() {
+      return (
+          <div className="container">
+              <div className="row">
+                  <form onSubmit={this.onSubmit}>
+                      <div className="form-group">
+                          <input type="file" onChange={this.onFileChange} />
+                      </div>
+                      <div className="form-group">
+                          <button className="btn btn-primary" type="submit">Upload</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      )
+  }
 }
-
-export default FileUploader;
