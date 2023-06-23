@@ -9,16 +9,16 @@ export default class FileUpload extends Component {
       this.onFileChange = this.onFileChange.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
       this.state = {
-          profileImg: ''
+          lessonPDF: ''
       }
   }
   onFileChange(e) {
-      this.setState({ profileImg: e.target.files[0] })
+      this.setState({ lessonPDF: e.target.files[0] })
   }
   onSubmit(e) {
       e.preventDefault()
       const formData = new FormData()
-      formData.append('profileImg', this.state.profileImg)
+      formData.append('lessonPDF', this.state.lessonPDF)
       axios.post("http://localhost:4000/api/user-profile", formData, {
       }).then(res => {
           console.log(res)
