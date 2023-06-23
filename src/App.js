@@ -8,6 +8,7 @@ import Canvas from './components/Canvas';
 import FileUpload from './components/fileUpload';
 import { Counter } from './counter/counter';
 import { useSelector } from 'react-redux';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   useEffect(() => { pdfjs.GlobalWorkerOptions.workerSrc =`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;});
