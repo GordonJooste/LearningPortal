@@ -20,13 +20,13 @@ var upload = multer({
             cb(null, true);
         } else {
             cb(null, false);
-            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+            return cb(new Error('Only .pdf format allowed!'));
         }
     }
 });
 // User model
 let User = require('../models/User');
-router.post('/user-profile', upload.single('profileImg'), (req, res, next) => {
+router.post('/user-profile', upload.single('lessonPDF'), (req, res, next) => {
     const url = req.protocol + '://' + req.get('host')
     const user = new User({
         _id: new mongoose.Types.ObjectId(),
@@ -38,7 +38,7 @@ router.post('/user-profile', upload.single('profileImg'), (req, res, next) => {
             message: "User registered successfully!",
             userCreated: {
                 _id: result._id,
-                profileImg: result.profileImg
+                profileImg: result.profileImg, //lessonPDF: result.lessonPDF, 
             }
         })
     }).catch(err => {
