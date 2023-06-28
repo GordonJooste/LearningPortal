@@ -11,6 +11,7 @@ const fileUploadSlice = createSlice({
   initialState,
   reducers: {
     uploadFile: (state, action) => {
+      console.log('in the slice');
       state.uploadedFile = action.payload;
     },
   },

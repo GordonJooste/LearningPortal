@@ -38,7 +38,7 @@ router.post('/user-profile', upload.single('lessonPDF'), (req, res, next) => {
             message: "User registered successfully!",
             userCreated: {
                 _id: result._id,
-                profileImg: result.profileImg
+                profileImg: result.profileImg, //lessonPDF: result.lessonPDF, 
             }
         })
     }).catch(err => {
