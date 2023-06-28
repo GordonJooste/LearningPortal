@@ -1,43 +1,33 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { uploadFile } from '../fileupload/fileUploadSlice';
 import axios from 'axios';
 
-export default class FileUpload extends Component {
-  constructor(props) {
-      super(props);
-      this.onFileChange = this.onFileChange.bind(this);
-      this.onSubmit = this.onSubmit.bind(this);
-      this.state = {
-          lessonPDF: ''
-      }
-  }
+export default function FileUpload() {
+    const [fileState,setFileState] = useState({lessonPDF: ''});
+    const dispatch = useDispatch();
 
-  mapDispatchToProps = () => ({ 
-    uploadFile,
-    });
-  
-  onFileChange(e) {
-      this.setState({ lessonPDF: e.target.files[0] })
-  }
-  onSubmit(e) {
+    const onFileChange = (e) => {
+      setFileState({ lessonPDF: e.target.files[0] })
+    }
+    const onSubmit = (e) => {
       e.preventDefault()
       const formData = new FormData()
-      //dispatch(uploadFile(this.state.lessonPDF));
-      formData.append('lessonPDF', this.state.lessonPDF)
+      
+      formData.append('lessonPDF', fileState.lessonPDF)
       axios.post("http://localhost:4000/api/user-profile", formData, {
       }).then(res => {
           console.log(res)
+          dispatch(uploadFile(res.data.userCreated));
       })
-  }
+    }
 
-  render() {
-      return (
+    return (
           <div className="container">
               <div className="row">
-                  <form onSubmit={this.onSubmit}>
+                  <form onSubmit={onSubmit}>
                       <div className="form-group">
-                          <input type="file" onChange={this.onFileChange} />
+                          <input type="file" onChange={onFileChange} />
                       </div>
                       <div className="form-group">
                           <button className="btn btn-primary" type="submit">Upload</button>
@@ -45,6 +35,5 @@ export default class FileUpload extends Component {
                   </form>
               </div>
           </div>
-      )
-  }
+    )
 }
