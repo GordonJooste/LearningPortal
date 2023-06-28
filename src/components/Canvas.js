@@ -95,7 +95,15 @@ const Canvas = ({ width, height }) => {
     }
   };
 
-  return <canvas className='Canvas' ref={canvasRef} height={height} width={width} />;
+  const erase = () =>{
+    ; // TODO Need to make it erase on the canvas here
+  }
+
+  return (<div>
+            <button onClick={erase} style={{ position: 'relative', zIndex: 4 }} >Eraser</button>
+            <canvas className='Canvas' ref={canvasRef} height={height} width={width} /> 
+            
+          </div>);
 };
 
 Canvas.defaultProps = {
