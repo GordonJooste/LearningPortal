@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Document, Page } from "react-pdf";
 import '../App.css';
-import Canvas from "./Canvas";
 
 //import "react-pdf/dist/esm/Page/TextLayer.css";
 
@@ -38,14 +37,15 @@ export default function SinglePage(props) {
       >
         <Page className = "Page" pageNumber={pageNumber} renderTextLayer={false} />
       </Document>
-      <div className="NextPrev">
+      <div className="form-group">
         <p>
           Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}
         </p>
-        <button type="button" disabled={pageNumber <= 1} onClick={previousPage}>
+        <button className="btn btn-primary" type="button" disabled={pageNumber <= 1} onClick={previousPage}>
           Previous
         </button>
         <button
+        className="btn btn-primary"
           type="button"
           disabled={pageNumber >= numPages}
           onClick={nextPage}

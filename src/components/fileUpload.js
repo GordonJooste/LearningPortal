@@ -18,7 +18,7 @@ export default function FileUpload() {
       axios.post("http://localhost:4000/api/user-profile", formData, {
       }).then(res => {
           console.log(res)
-          dispatch(uploadFile(res.data.userCreated));
+          dispatch(uploadFile(res.data.userCreated.profileImg));
       })
     }
 

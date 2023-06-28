@@ -1,12 +1,9 @@
 import React from 'react';
-import { Document, Page, pdfjs } from "react-pdf";
+import { pdfjs } from "react-pdf";
 import { useEffect } from 'react';
-import { connect } from 'react-redux';
 import SinglePage from './components/singlepage';
-import samplePDF from "./Welcome.pdf";
 import Canvas from './components/Canvas';
 import FileUpload from './components/fileUpload';
-import { Counter } from './counter/counter';
 import { useSelector } from 'react-redux';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
@@ -20,8 +17,8 @@ const App = () => {
     return (
       <div className="App">
         <h4>PDFDisplay</h4>
-        <SinglePage />
         <Canvas />
+        <SinglePage pdf = {uploadedFile} />
       </div>
     );
   }
