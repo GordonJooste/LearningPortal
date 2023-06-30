@@ -4,6 +4,7 @@ const Canvas = ({ width, height }) => {
   const canvasRef = useRef(null);
   const [isPainting, setIsPainting] = useState(false);
   const [mousePosition, setMousePosition] = useState(undefined);
+  
 
   const startPaint = useCallback((event) => {
     const coordinates = getCoordinates(event);
@@ -28,6 +29,7 @@ const Canvas = ({ width, height }) => {
     (event) => {
       if (isPainting) {
         const newMousePosition = getCoordinates(event);
+        //console.log(`x:${mousePosition.x} and y: ${mousePosition.y}`); co ordinates of drawing lines is here. not saved in state. Only saved in the ref.
         if (mousePosition && newMousePosition) {
           drawLine(mousePosition, newMousePosition);
           setMousePosition(newMousePosition);
@@ -80,9 +82,10 @@ const Canvas = ({ width, height }) => {
       return;
     }
     const canvas = canvasRef.current;
+    
     const context = canvas.getContext('2d');
     if (context) {
-      context.strokeStyle = 'red';
+      context.strokeStyle = 'red'; //colours are here
       context.lineJoin = 'round';
       context.lineWidth = 5;
 
@@ -90,12 +93,26 @@ const Canvas = ({ width, height }) => {
       context.moveTo(originalMousePosition.x, originalMousePosition.y);
       context.lineTo(newMousePosition.x, newMousePosition.y);
       context.closePath();
-
+      
       context.stroke();
     }
   };
 
-  return <canvas className='Canvas' ref={canvasRef} height={height} width={width} />;
+  const erase = () =>{
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    
+    ctx.clearRect(0,0, height, width);
+    
+  }
+
+  
+
+  return (<div>
+            <button className='Eraser-Button' onClick={erase} style={{ position: 'relative', zIndex: 4 }} >Eraser</button>
+            <canvas className='Canvas' ref={canvasRef} height={height} width={width} /> 
+            
+          </div>);
 };
 
 Canvas.defaultProps = {
