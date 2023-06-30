@@ -64,3 +64,8 @@ We would like to express our gratitude to the following resources and libraries 
 ## Contact
 
 For any questions, suggestions, or support, please feel free to contact me at [jooste44@gmail.com](mailto:jooste44@gmail.com).
+
+
+## Notes
+
+https://koenvangilst.nl/blog/react-hooks-with-canvas

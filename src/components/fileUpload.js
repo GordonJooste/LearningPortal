@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { uploadFile } from '../fileupload/fileUploadSlice';
+import { uploadFile } from '../slice/fileUploadSlice';
 import axios from 'axios';
 
 export default function FileUpload() {

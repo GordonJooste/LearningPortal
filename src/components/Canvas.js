@@ -1,10 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { selectCanvas, ToggleClear } from '../slice/canvasSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import {store} from '../store/store';
 
 const Canvas = ({ width, height }) => {
   const canvasRef = useRef(null);
   const [isPainting, setIsPainting] = useState(false);
   const [mousePosition, setMousePosition] = useState(undefined);
-  
+  const variable = useSelector(selectCanvas).canvas.clearCanvas;
+  const dispatch = useDispatch();
 
   const startPaint = useCallback((event) => {
     const coordinates = getCoordinates(event);
@@ -14,6 +18,31 @@ const Canvas = ({ width, height }) => {
     }
   }, []);
 
+  //TODO modify to make the eraser work when the variable is changed
+  useEffect(() => {
+    // Function to be triggered when clearCanvas changes
+    const handleClearCanvasChange = () => {
+      if (variable) {
+        // Do something when clearCanvas is true
+        console.log('Clear Canvas is true');
+      } else {
+        // Do something when clearCanvas is false
+        console.log('Clear Canvas is false');
+      }
+    };
+
+    handleClearCanvasChange(); // Call the function initially
+
+    // Subscribe to changes in clearCanvas
+    const unsubscribe = store.subscribe(handleClearCanvasChange);
+
+    return () => {
+      // Clean up the subscription when the component unmounts
+      unsubscribe();
+    };
+  }, [variable]);
+
+  
   useEffect(() => {
     if (!canvasRef.current) {
       return;
@@ -106,9 +135,12 @@ const Canvas = ({ width, height }) => {
     
   }
 
-  
+  const hello = () =>{
+    console.log('hello');
+  }
 
   return (<div>
+            
             <button className='Eraser-Button' onClick={erase} style={{ position: 'relative', zIndex: 4 }} >Eraser</button>
             <canvas className='Canvas' ref={canvasRef} height={height} width={width} /> 
             
