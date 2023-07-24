@@ -1,27 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Document, Page } from "react-pdf";
+import { useSelector, useDispatch } from 'react-redux';
 import '../App.css';
+import { PrevPage, SetPages, selectNumPages, selectPage,NextPage, SetInitialPage } from "../slice/canvasSlice";
 
 //import "react-pdf/dist/esm/Page/TextLayer.css";
 
 export default function SinglePage(props) {
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1); //setting 1 to show fisrt page
+  const dispatch = useDispatch();
+  const numPages = useSelector(selectNumPages);
+  const pageNumber = useSelector(selectPage);
+  let currentPage = 1;
+  useEffect(() => {
+    if (numPages === null) {
+      // If numPages is not set yet, fetch the value from the PDF document
+      fetchNumPages();
+    }
+  }, [numPages]);
 
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
+  function fetchNumPages() {
+    const { pdf } = props;
+    const loadingTask = pdf && pdf.numPages ? Promise.resolve({ numPages: pdf.numPages }) : null;
+
+    if (loadingTask) {
+      loadingTask.then(({ numPages }) => {
+        dispatch(SetPages(numPages));
+      });
+    }
+  }
+  function onDocumentLoadSuccess({ numPages: NumberOfPages }) {
+    dispatch(SetInitialPage(1));
+    console.log(NumberOfPages);
+    console.log(pageNumber);
+    dispatch(SetPages(NumberOfPages));
   }
 
-  function changePage(offset) {
-    setPageNumber(prevPageNumber => prevPageNumber + offset);
-  }
+
+  //function changePage(offset) {
+  //  setPageNumber(prevPageNumber => prevPageNumber + offset);
+  //}
 
   function previousPage() {
-    changePage(-1);
+    dispatch(PrevPage());
   }
 
   function nextPage() {
-    changePage(+1);
+    dispatch(NextPage());
   }
 
   const { pdf } = props;
@@ -41,13 +65,13 @@ export default function SinglePage(props) {
         <p>
           Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}
         </p>
-        <button className="btn btn-primary" type="button" disabled={pageNumber <= 1} onClick={previousPage}>
+        <button className="btn btn-primary" type="button"  onClick={previousPage}>
           Previous
         </button>
         <button
         className="btn btn-primary"
           type="button"
-          disabled={pageNumber >= numPages}
+          
           onClick={nextPage}
         >
           Next

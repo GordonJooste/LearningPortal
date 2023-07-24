@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import SinglePage from './components/Singlepage';
 import Canvas from './components/Canvas.js';
 import FileUpload from './components/FileUpload';
-import samplepdf from './backend/public/57be1181-0cf3-4f70-b455-14d00b787294-degree.pdf'
+import samplepdf from './backend/public/ChiCV.pdf'
 import Timer from './components/Timer';
 import { useSelector, useDispatch } from 'react-redux';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -37,11 +37,10 @@ const App = () => {
     return (
       <div className="App">
         <h4>PDFDisplay</h4>
-        <button onClick={thunk} style={{ position: 'relative', zIndex: 4 }}> hello </button>
+        <button onClick={thunk} style={{ position: 'relative', zIndex: 4 }}> Clear </button>
         <Canvas />
         <SinglePage pdf = {samplepdf} />
-        {//<Timer />
-        }
+        
       </div>
     );
   }

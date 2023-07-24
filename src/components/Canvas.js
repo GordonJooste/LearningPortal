@@ -8,7 +8,7 @@ const Canvas = ({ width, height }) => {
   const [isPainting, setIsPainting] = useState(false);
   const [mousePosition, setMousePosition] = useState(undefined);
   const variable = useSelector(selectCanvas).canvas.clearCanvas;
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
   const startPaint = useCallback((event) => {
     const coordinates = getCoordinates(event);
@@ -20,11 +20,13 @@ const Canvas = ({ width, height }) => {
 
   //TODO modify to make the eraser work when the variable is changed
   useEffect(() => {
+
     // Function to be triggered when clearCanvas changes
     const handleClearCanvasChange = () => {
       if (variable) {
         // Do something when clearCanvas is true
         console.log('Clear Canvas is true');
+        erase();
       } else {
         // Do something when clearCanvas is false
         console.log('Clear Canvas is false');
@@ -135,13 +137,9 @@ const Canvas = ({ width, height }) => {
     
   }
 
-  const hello = () =>{
-    console.log('hello');
-  }
-
   return (<div>
             
-            <button className='Eraser-Button' onClick={erase} style={{ position: 'relative', zIndex: 4 }} >Eraser</button>
+            
             <canvas className='Canvas' ref={canvasRef} height={height} width={width} /> 
             
           </div>);
