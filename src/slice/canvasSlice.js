@@ -4,6 +4,7 @@ const initialState = {
   clearCanvas: false,
   pageNumber: 1,
   numPages: null,
+  color: '#FF0000',
 };
 
 const canvasSlice = createSlice({
@@ -35,22 +36,28 @@ const canvasSlice = createSlice({
         state.pageNumber = state.numPages; // If on the first page, go to the last page
       }
     },
-    SetInitialPage: (state,action) =>{
+    
+    SetPage: (state,action) =>{
       console.log('Initial Page Set');
-      state.pageNumber = action.payload;
+      state.pageNumber = action.payload.data;
     },
     SetPages: (state,action) =>{
       console.log('Page total set');
       state.numPages = action.payload;
+    },
+    SetColor: (state, action) => {
+      console.log('Color set');
+      state.color = action.payload.data;
     }
     
 
   },
 });
 
-export const { ToggleClear, NextPage, PrevPage, SetPages, SetInitialPage } = canvasSlice.actions;
+export const { ToggleClear, NextPage, PrevPage, SetPages, SetPage, SetColor } = canvasSlice.actions;
 export const selectCanvas = (state) => state;
 export const selectPage = (state) => state.pageNumber;
 export const selectNumPages = (state) => state.numPages;
+export const selectColor = (state) => state.color;
 
 export default canvasSlice.reducer;

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { selectCanvas, ToggleClear } from '../slice/canvasSlice';
+import { selectCanvas, selectColor, ToggleClear } from '../slice/canvasSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import {store} from '../store/store';
 
@@ -8,7 +8,9 @@ const Canvas = ({ width, height }) => {
   const [isPainting, setIsPainting] = useState(false);
   const [mousePosition, setMousePosition] = useState(undefined);
   const variable = useSelector(selectCanvas).canvas.clearCanvas;
-  //const dispatch = useDispatch();
+  const color = useSelector(selectColor);
+  console.log(color);
+  const dispatch = useDispatch();
 
   const startPaint = useCallback((event) => {
     const coordinates = getCoordinates(event);
@@ -116,7 +118,8 @@ const Canvas = ({ width, height }) => {
     
     const context = canvas.getContext('2d');
     if (context) {
-      context.strokeStyle = 'red'; //colours are here
+      context.strokeStyle = color; //colours are here
+      console.log(context.strokeStyle);
       context.lineJoin = 'round';
       context.lineWidth = 5;
 

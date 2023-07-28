@@ -1,10 +1,10 @@
-import Timer from './components/Timer';
+//import Timer from './components/Timer';
 import { useSelector, useDispatch } from 'react-redux';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import React, {useState} from 'react';
-import { useEffect } from 'react';
-import SinglePage from './components/Singlepage';
-import { selectCanvas, ToggleClear } from './slice/canvasSlice';
+//import { useEffect } from 'react';
+import { ToggleClear } from '../slice/canvasSlice';
+import Timer from './Timer';
+import '../App.css';
 
 const Sidebar = () => {
     const dispatch = useDispatch();
@@ -20,7 +20,8 @@ const Sidebar = () => {
         <div className='SideBar'>
 
             <button onClick={thunk} style={{ position: 'relative', zIndex: 4 }}> Clear </button>
-            {//<Timer />
+            <Timer />
+            {
             // <Color Selector />
             }
         </div>

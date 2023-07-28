@@ -63,29 +63,28 @@ function Timer() {
 
   return (
     <div className="container">
-      <div className="text-center mb-4">
-        <h2>Countdown Timer</h2>
-      </div>
-      <div className="text-center mb-4">
-        <h3>{formatTime(countdown)}</h3>
-      </div>
-      <div className="d-flex justify-content-center mb-4">
-        <button className="btn btn-primary mx-2" onClick={handleDecrementTime}>
-          -
-        </button>
-        <button className="btn btn-primary mx-2" onClick={handleIncrementTime}>
-          +
-        </button>
-      </div>
-      <div className="d-flex justify-content-center mb-4">
-        <button className="btn btn-success mx-2" onClick={handleStart} disabled={isRunning}>
-          Start
-        </button>
-        <button className="btn btn-danger mx-2" onClick={handleReset}>
-          Reset
-        </button>
-      </div>
+  <div className="text-center mb-4 border-top border-bottom py-3">
+    <div className="d-inline-block">
+      <button className="btn btn-primary btn-sm mr-2" onClick={handleDecrementTime}>
+        -
+      </button>
+      <button className="btn btn-primary btn-sm" onClick={handleIncrementTime}>
+        +
+      </button>
     </div>
+    <h3 className="d-inline-block mx-4">{formatTime(countdown)}</h3>
+    <div className="d-inline-block">
+      <button className="btn btn-success btn-sm mx-2" onClick={handleStart} disabled={isRunning}>
+        Start
+      </button>
+      <button className="btn btn-danger btn-sm mx-2" onClick={handleReset}>
+        Reset
+      </button>
+    </div>
+  </div>
+</div>
+
+
   );
 }
 
