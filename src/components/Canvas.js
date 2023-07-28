@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { selectCanvas, selectColor, ToggleClear } from '../slice/canvasSlice';
+import { selectCanvas, selectColor, selectColorChange, ToggleChangeColor, ToggleClear } from '../slice/canvasSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import {store} from '../store/store';
 
@@ -8,8 +8,9 @@ const Canvas = ({ width, height }) => {
   const [isPainting, setIsPainting] = useState(false);
   const [mousePosition, setMousePosition] = useState(undefined);
   const variable = useSelector(selectCanvas).canvas.clearCanvas;
-  const color = useSelector(selectColor);
-  console.log(color);
+  const colorRedux = useSelector(selectColor);
+  const [colorState,setColorState] = useState('blue');
+  const colorChange = useSelector(selectColorChange);
   const dispatch = useDispatch();
 
   const startPaint = useCallback((event) => {
@@ -22,16 +23,16 @@ const Canvas = ({ width, height }) => {
 
   //TODO modify to make the eraser work when the variable is changed
   useEffect(() => {
-
     // Function to be triggered when clearCanvas changes
+    console.log(`clearCanvas:${variable}`);
     const handleClearCanvasChange = () => {
       if (variable) {
         // Do something when clearCanvas is true
-        console.log('Clear Canvas is true');
+        
         erase();
       } else {
         // Do something when clearCanvas is false
-        console.log('Clear Canvas is false');
+        
       }
     };
 
@@ -47,6 +48,32 @@ const Canvas = ({ width, height }) => {
   }, [variable]);
 
   
+  useEffect(() => {
+    // Function to be triggered when colorChange changes
+    const handleColorChange = () => {
+      console.log(`colorChange:${colorChange}`);
+      if (colorChange) {
+        // Do something when colorChange is true
+        
+        changeColor(colorRedux);
+      } else {
+        // Do something when colorChange is false
+        
+      }
+    };
+
+    handleColorChange(colorRedux); // Call the function initially
+
+    // Subscribe to changes in colorChange
+    const unsubscribe = store.subscribe(handleColorChange);
+
+    return () => {
+      // Clean up the subscription when the component unmounts
+      unsubscribe();
+    };
+  }, [colorRedux]);
+
+
   useEffect(() => {
     if (!canvasRef.current) {
       return;
@@ -118,7 +145,7 @@ const Canvas = ({ width, height }) => {
     
     const context = canvas.getContext('2d');
     if (context) {
-      context.strokeStyle = color; //colours are here
+      context.strokeStyle = colorState; //colours are here
       console.log(context.strokeStyle);
       context.lineJoin = 'round';
       context.lineWidth = 5;
@@ -138,6 +165,11 @@ const Canvas = ({ width, height }) => {
     
     ctx.clearRect(0,0, height, width);
     
+  }
+
+  const changeColor = (localColor) =>{
+    setColorState(localColor);
+    console.log('suxxess');
   }
 
   return (<div>

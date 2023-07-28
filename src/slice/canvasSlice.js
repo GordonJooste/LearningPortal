@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   clearCanvas: false,
+  colorChange: false,
   pageNumber: 1,
   numPages: null,
   color: '#FF0000',
@@ -18,6 +19,15 @@ const canvasSlice = createSlice({
       }
       else{
         state.clearCanvas = true;
+      }
+    },
+    ToggleChangeColor: (state) => {
+      console.log('colorChange');
+      if(state.colorChange){
+        state.colorChange = false;
+      }
+      else{
+        state.colorChange = true;
       }
     },
     NextPage: (state) => {
@@ -48,16 +58,20 @@ const canvasSlice = createSlice({
     SetColor: (state, action) => {
       console.log('Color set');
       state.color = action.payload.data;
-    }
+    },
+    extraReducers: (builder) => {
+      builder.addDefaultCase((state) => state);
+    },
     
 
   },
 });
 
-export const { ToggleClear, NextPage, PrevPage, SetPages, SetPage, SetColor } = canvasSlice.actions;
+export const { ToggleClear,ToggleChangeColor, NextPage, PrevPage, SetPages, SetPage, SetColor } = canvasSlice.actions;
 export const selectCanvas = (state) => state;
 export const selectPage = (state) => state.pageNumber;
 export const selectNumPages = (state) => state.numPages;
 export const selectColor = (state) => state.color;
+export const selectColorChange = (state) => state.colorChange;
 
 export default canvasSlice.reducer;
