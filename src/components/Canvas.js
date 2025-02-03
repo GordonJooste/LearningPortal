@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-const Canvas = ({ width, height }) => {
+const Canvas = ({ width, height, color = 'red', onErase }) => {
+  console.log('Canvas rendering with color:', color);
   const canvasRef = useRef(null);
   const [isPainting, setIsPainting] = useState(false);
   const [mousePosition, setMousePosition] = useState(undefined);
@@ -15,6 +16,10 @@ const Canvas = ({ width, height }) => {
   }, []);
 
   useEffect(() => {
+    console.log('Color changed to:', color);
+  }, [color]);
+
+  useEffect(() => {
     if (!canvasRef.current) {
       return;
     }
@@ -24,6 +29,28 @@ const Canvas = ({ width, height }) => {
       canvas.removeEventListener('mousedown', startPaint);
     };
   }, [startPaint]);
+
+  const drawLine = useCallback((originalMousePosition, newMousePosition) => {
+    if (!canvasRef.current) {
+      return;
+    }
+    console.log('Drawing line with color:', color);
+    const canvas = canvasRef.current;
+    
+    const context = canvas.getContext('2d');
+    if (context) {
+      context.strokeStyle = color;
+      context.lineJoin = 'round';
+      context.lineWidth = 5;
+
+      context.beginPath();
+      context.moveTo(originalMousePosition.x, originalMousePosition.y);
+      context.lineTo(newMousePosition.x, newMousePosition.y);
+      context.closePath();
+      
+      context.stroke();
+    }
+  }, [color]);
 
   const paint = useCallback(
     (event) => {
@@ -36,7 +63,7 @@ const Canvas = ({ width, height }) => {
         }
       }
     },
-    [isPainting, mousePosition]
+    [isPainting, mousePosition, drawLine]
   );
 
   useEffect(() => {
@@ -77,26 +104,6 @@ const Canvas = ({ width, height }) => {
     return { x: event.pageX - canvas.offsetLeft, y: event.pageY - canvas.offsetTop };
   };
 
-  const drawLine = (originalMousePosition, newMousePosition) => {
-    if (!canvasRef.current) {
-      return;
-    }
-    const canvas = canvasRef.current;
-    
-    const context = canvas.getContext('2d');
-    if (context) {
-      context.strokeStyle = 'red'; //colours are here
-      context.lineJoin = 'round';
-      context.lineWidth = 5;
-
-      context.beginPath();
-      context.moveTo(originalMousePosition.x, originalMousePosition.y);
-      context.lineTo(newMousePosition.x, newMousePosition.y);
-      context.closePath();
-      
-      context.stroke();
-    }
-  };
 
   const erase = () =>{
     const canvas = canvasRef.current;
