@@ -1,13 +1,12 @@
-import React, { useState, useCallback, useRef, useMemo } from "react";
+import React, { useState, useCallback, useRef, useMemo, useEffect } from "react";
 import { Document, Page } from "react-pdf";
 import Canvas from "./Canvas";
 import Countdown from "./countdown";
 import Stopwatch from "./stopwatch";
+import PDFViewer from "./pdfViewer"; 
 import '../App.css';
 
 // Memoize the Document and Page components to prevent unnecessary re-renders
-const MemoizedDocument = React.memo(Document);
-const MemoizedPage = React.memo(Page);
 
 export default function SinglePage(props) {
   const [selectedColor, setSelectedColor] = useState('red');
@@ -59,16 +58,11 @@ export default function SinglePage(props) {
     <div className="SinglePage">
       <Canvas ref={canvasRef} color={selectedColor} />
       <div className="pdf-container">
-        <div className="pdf-page canvas-container">
-          <MemoizedDocument
-            className="Document"
-            file={pdf}
-            options={pdfOptions}
-            onLoadSuccess={onDocumentLoadSuccess}
-          >
-            <MemoizedPage className="Page" pageNumber={pageNumber} renderTextLayer={false} />
-          </MemoizedDocument>
-        </div>
+        <PDFViewer
+          pdf={pdf}
+          pageNumber={pageNumber}
+          onDocumentLoadSuccess={onDocumentLoadSuccess}
+        />
       </div>
       <div className="controls form-group">
         <p>

@@ -11,7 +11,9 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 const App = () => {
-  useEffect(() => { pdfjs.GlobalWorkerOptions.workerSrc =`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;});
+  useEffect(() => {
+    pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+  }, []);
   const uploadedFile = useSelector((state) => state.fileUpload.uploadedFile);
   
   // only want Fileupload to display when no pdf is selected.
