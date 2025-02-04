@@ -111,13 +111,11 @@ export default function SinglePage(props) {
           >
             Erase
           </button>
-        </div>
+          </div>
       </div>
-      {showTimer && (
-        <div className="timer-sidebar">
-          <Timer />
-        </div>
-      )}
+      <div className={`timer-sidebar ${showTimer ? '' : 'hidden'}`}>
+        <Timer key="timer" /> {/* Add a key to prevent re-rendering */}
+      </div>
     </div>
   );
 }
