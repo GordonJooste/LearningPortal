@@ -27,10 +27,12 @@ z-index: 1; /* Adjust the z-index to control the stacking order */
 }
 
 .pdf-container {
+  position: relative;
+  z-index: 1; /* Ensure the PDF is above the default content */
   width: 100%;
-  max-width: 800px;
+  height: 100vh;
+  overflow: auto;
   margin: 0 auto;
-  height: 800px;
   overflow: auto;
 }
 
@@ -74,7 +76,7 @@ z-index: 1; /* Adjust the z-index to control the stacking order */
   transition: transform 0.2s;
 }
 
-.timer-popup {
+.countdown-popup {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -86,7 +88,7 @@ z-index: 1; /* Adjust the z-index to control the stacking order */
   z-index: 1000;
 }
 
-.timer-sidebar {
+.countdown-sidebar {
   position: fixed;
   top: 20px;
   right: 20px;
@@ -98,12 +100,12 @@ z-index: 1; /* Adjust the z-index to control the stacking order */
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.timer-sidebar.visible {
+.countdown-sidebar.visible {
   opacity: 1;
   visibility: visible;
 }
 
-.timer-sidebar.hidden {
+.countdown-sidebar.hidden {
   opacity: 0;
   visibility: hidden;
 }
@@ -149,3 +151,33 @@ z-index: 1; /* Adjust the z-index to control the stacking order */
 .btn:hover {
   opacity: 0.8;
 }
+
+.stopwatch-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #f8f9fa;
+  padding: 20px;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000; /* Ensure the stopwatch is above the PDF */
+}
+
+.stopwatch-sidebar.hidden {
+  transform: translateX(100%);
+}
+
+.stopwatch-display {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.stopwatch-controls {
+  display: flex;
+  justify-content: space-between;
+}
+

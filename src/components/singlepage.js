@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useRef, useMemo } from "react";
 import { Document, Page } from "react-pdf";
 import Canvas from "./Canvas";
-import Timer from "./timer";
+import Countdown from "./countdown";
+import Stopwatch from "./stopwatch";
 import '../App.css';
 
 // Memoize the Document and Page components to prevent unnecessary re-renders
@@ -12,7 +13,8 @@ export default function SinglePage(props) {
   const [selectedColor, setSelectedColor] = useState('red');
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
-  const [showTimer, setShowTimer] = useState(false);
+  const [showCountdown, setShowCountdown] = useState(false);
+  const [showStopwatch, setShowStopwatch] = useState(false);
   const canvasRef = useRef(null);
 
   // Memoize the color change handler
@@ -101,9 +103,15 @@ export default function SinglePage(props) {
           </div>
           <button
             className="btn btn-secondary"
-            onClick={() => setShowTimer(!showTimer)}
+            onClick={() => setShowCountdown(!showCountdown)}
           >
-            {showTimer ? "Hide Timer" : "Show Timer"}
+            {showCountdown ? "Hide Countdown" : "Show Countdown"}
+          </button>
+          <button
+            className="btn btn-secondary"
+            onClick={() => setShowStopwatch(!showStopwatch)}
+          >
+            {showStopwatch ? "Hide Stopwatch" : "Show Stopwatch"}
           </button>
           <button
             className="btn btn-danger"
@@ -113,8 +121,11 @@ export default function SinglePage(props) {
           </button>
           </div>
       </div>
-      <div className={`timer-sidebar ${showTimer ? '' : 'hidden'}`}>
-        <Timer key="timer" /> {/* Add a key to prevent re-rendering */}
+      <div className={`countdown-sidebar ${showCountdown ? '' : 'hidden'}`}>
+        <Countdown key="countdown" /> {}
+      </div>
+      <div className={`stopwatch-sidebar ${showStopwatch ? '' : 'hidden'}`}>
+        <Stopwatch key="stopwatch" />
       </div>
     </div>
   );

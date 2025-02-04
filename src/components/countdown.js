@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Timer() {
+function Countdown() {
   const [time, setTime] = useState(0);
   const [countdown, setCountdown] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -66,7 +66,7 @@ function Timer() {
   return (
     <div className="container">
       <div className="text-center mb-4">
-        <h2>Countdown Timer</h2>
+        <h2>Countdown</h2>
       </div>
       <div className="text-center mb-4">
         <h3>{formatTime(countdown)}</h3>
@@ -91,4 +91,4 @@ function Timer() {
   );
 }
 
-export default Timer;
+export default Countdown;

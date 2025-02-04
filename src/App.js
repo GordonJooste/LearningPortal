@@ -5,7 +5,7 @@ import SinglePage from './components/singlepage';
 import Canvas from './components/Canvas.js';
 import FileUpload from './components/fileUpload.js';
 import samplepdf from './backend/public/Welcome.pdf'
-import Timer from './components/timer';
+import Countdown from './components/countdown.js';
 import { useSelector } from 'react-redux';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
