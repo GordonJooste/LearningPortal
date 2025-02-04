@@ -1,11 +1,18 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
 
-const Canvas = ({ width, height, color = 'red', onErase }) => {
-  console.log('Canvas rendering with color:', color);
+const Canvas = forwardRef(({ width, height, color = 'red', onErase }, ref) => {
   const canvasRef = useRef(null);
   const [isPainting, setIsPainting] = useState(false);
   const [mousePosition, setMousePosition] = useState(undefined);
   
+
+  useImperativeHandle(ref, () => ({
+    erase: () => {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, width, height);
+    }
+  }));
 
   const startPaint = useCallback((event) => {
     const coordinates = getCoordinates(event);
@@ -14,10 +21,6 @@ const Canvas = ({ width, height, color = 'red', onErase }) => {
       setIsPainting(true);
     }
   }, []);
-
-  useEffect(() => {
-    console.log('Color changed to:', color);
-  }, [color]);
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -105,22 +108,22 @@ const Canvas = ({ width, height, color = 'red', onErase }) => {
   };
 
 
-  const erase = () =>{
+  const erase = useCallback(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    
-    ctx.clearRect(0,0, height, width);
-    
-  }
+    ctx.clearRect(0, 0, width, height);
+    if (onErase) {
+      onErase(); // Notify parent component that erase was triggered
+    }
+  }, [width, height, onErase]);
 
   
 
   return (<div>
-            <button className='Eraser-Button' onClick={erase} style={{ position: 'relative', zIndex: 4 }} >Eraser</button>
             <canvas className='Canvas' ref={canvasRef} height={height} width={width} /> 
             
           </div>);
-};
+});
 
 Canvas.defaultProps = {
   width: window.innerWidth,

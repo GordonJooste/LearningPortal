@@ -10,13 +10,16 @@ function Timer() {
 
     if (isRunning) {
       intervalId = setInterval(() => {
-        setCountdown((prevCountdown) => prevCountdown - 1);
+        setCountdown((prevCountdown) => {
+          if (prevCountdown > 0) {
+            return prevCountdown - 1;
+          } else {
+            clearInterval(intervalId);
+            setIsRunning(false);
+            return 0;
+          }
+        });
       }, 1000);
-    }
-
-    if (countdown === 0) {
-      clearInterval(intervalId);
-      setIsRunning(false);
     }
 
     return () => {
@@ -45,10 +48,9 @@ function Timer() {
   };
 
   const handleDecrementTime = () => {
-    if (time > 0) {
-      setTime((prevTime) => prevTime - 60);
-      setCountdown((prevCountdown) => prevCountdown - 60);
-    }
+    // Ensure time doesn't go below 0
+    setTime((prevTime) => (prevTime > 60 ? prevTime - 60 : 0));
+    setCountdown((prevCountdown) => (prevCountdown > 60 ? prevCountdown - 60 : 0));
   };
 
   const formatTime = (timeInSeconds) => {
