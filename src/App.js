@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import SinglePage from './components/singlepage';
 import Canvas from './components/Canvas.js';
 import FileUpload from './components/fileUpload.js';
-import samplepdf from './backend/public/Welcome.pdf'
 import Countdown from './components/countdown.js';
 import { useSelector } from 'react-redux';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -19,21 +18,11 @@ const App = () => {
   // only want Fileupload to display when no pdf is selected.
   // Singlepage and canvas should then display when pdf is selected
   
-
-  const test = false;
   if(uploadedFile){
     return (
       <div className="App">
         <h4>PDFDisplay</h4>
         <SinglePage pdf = {uploadedFile} />
-      </div>
-    );
-  }
-  else if(test){
-    return (
-      <div className="App">
-        <h4>PDFDisplay</h4>
-        <SinglePage pdf = {samplepdf} />
       </div>
     );
   }
