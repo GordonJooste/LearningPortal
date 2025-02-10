@@ -20,7 +20,7 @@ const App = () => {
   // Singlepage and canvas should then display when pdf is selected
   
 
-  const test = true;
+  const test = false;
   if(uploadedFile){
     return (
       <div className="App">
@@ -34,8 +34,6 @@ const App = () => {
       <div className="App">
         <h4>PDFDisplay</h4>
         <SinglePage pdf = {samplepdf} />
-        {//<Timer />
-        }
       </div>
     );
   }

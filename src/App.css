@@ -15,12 +15,13 @@ z-index: 2; /* Adjust the z-index to control the stacking order */
 }
 
 .react-pdf__Page {
-position: absolute;
-top: 0;
-left: 0;
-z-index: 1; /* Adjust the z-index to control the stacking order */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: auto;
 }
-
 .NextPrev {
   position: absolute;
   z-index: 3;
@@ -28,11 +29,12 @@ z-index: 1; /* Adjust the z-index to control the stacking order */
 
 .pdf-container {
   position: relative;
-  z-index: 1; /* Ensure the PDF is above the default content */
+  z-index: 1;
   height: 800px;
-  overflow: auto;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
   margin: 0 auto;
-  overflow: auto;
 }
 
 .parent-container {
@@ -48,7 +50,7 @@ z-index: 1; /* Adjust the z-index to control the stacking order */
 
 .pdf-page {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: contain;
 }
 
