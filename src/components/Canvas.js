@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
 
-const Canvas = forwardRef(({ width, height, color = 'red', onErase, isEraser }, ref) => {
+const Canvas = forwardRef(({ width, height, color = 'red', onErase, isEraser, penSize }, ref) => {
 
   const canvasRef = useRef(null);
   const [isPainting, setIsPainting] = useState(false);
@@ -60,7 +60,7 @@ const Canvas = forwardRef(({ width, height, color = 'red', onErase, isEraser }, 
       }
       
       context.lineJoin = 'round';
-      context.lineWidth = isEraser ? 20 : 5; // Make eraser width larger
+      context.lineWidth = isEraser ? 10+penSize : penSize; // Make eraser width larger
 
       context.beginPath();
       context.moveTo(originalMousePosition.x, originalMousePosition.y);
@@ -68,7 +68,7 @@ const Canvas = forwardRef(({ width, height, color = 'red', onErase, isEraser }, 
       context.closePath();
       context.stroke();
     }
-}, [color, isEraser]);
+}, [color, isEraser, penSize]);
 
   const paint = useCallback(
     (event) => {

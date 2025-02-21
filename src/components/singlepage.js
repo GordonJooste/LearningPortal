@@ -16,6 +16,7 @@ export default function SinglePage(props) {
   const [showStopwatch, setShowStopwatch] = useState(false);
   const [isEraser, setIsEraser] = useState(false);
   const [pdfHeight, setPdfHeight] = useState(0);
+  const [penSize, setPenSize] = useState(5);
   const canvasRef = useRef(null);
 
   // Memoize the color change handler
@@ -27,6 +28,14 @@ export default function SinglePage(props) {
   // Memoize the document load success handler
   const onDocumentLoadSuccess = useCallback(({ numPages }) => {
     setNumPages(numPages);
+  }, []);
+
+  const increasePenSize = useCallback(() => {
+    setPenSize(prev => Math.min(prev + 2, 50)); // Max size of 50
+  }, []);
+
+  const decreasePenSize = useCallback(() => {
+    setPenSize(prev => Math.max(prev - 2, 1)); // Min size of 1
   }, []);
 
   // Memoize the page change handlers
@@ -108,6 +117,7 @@ export default function SinglePage(props) {
             width={document.querySelector('.pdf-container')?.clientWidth}
             height={pdfHeight}
             isEraser={isEraser}
+            penSize={penSize}
             />
         </div>
       </div>
@@ -141,6 +151,23 @@ export default function SinglePage(props) {
                 {color.name}
               </button>
             ))}
+          </div>
+          <div className="pen-size-controls" style={{ display: 'inline-block', margin: '0 10px' }}>
+            <button
+              className="btn btn-primary"
+              onClick={increasePenSize}
+              style={{ margin: '0 5px' }}
+            >
+              +
+            </button>
+            <span style={{ margin: '0 5px' }}>Size: {penSize}</span>
+            <button
+              className="btn btn-primary"
+              onClick={decreasePenSize}
+              style={{ margin: '0 5px' }}
+            >
+              -
+            </button>
           </div>
           <button
             className="btn btn-secondary"
