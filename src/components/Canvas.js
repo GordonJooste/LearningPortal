@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
 
-const Canvas = forwardRef(({ width, height, color = 'red', onErase }, ref) => {
+const Canvas = forwardRef(({ width, height, color = 'red', onErase, isEraser }, ref) => {
+
   const canvasRef = useRef(null);
   const [isPainting, setIsPainting] = useState(false);
   const [mousePosition, setMousePosition] = useState(undefined);
@@ -44,32 +45,36 @@ const Canvas = forwardRef(({ width, height, color = 'red', onErase }, ref) => {
   }, [startPaint]);
 
   const drawLine = useCallback((originalMousePosition, newMousePosition) => {
-    if (!canvasRef.current) {
-      return;
-    }
-    console.log('Drawing line with color:', color);
-    const canvas = canvasRef.current;
+    if (!canvasRef.current) return;
     
+    const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
+    
     if (context) {
-      context.strokeStyle = color;
+      if (isEraser) {
+        context.globalCompositeOperation = 'destination-out';
+        context.strokeStyle = 'rgba(0,0,0,1)';
+      } else {
+        context.globalCompositeOperation = 'source-over';
+        context.strokeStyle = color;
+      }
+      
       context.lineJoin = 'round';
-      context.lineWidth = 5;
+      context.lineWidth = isEraser ? 20 : 5; // Make eraser width larger
 
       context.beginPath();
       context.moveTo(originalMousePosition.x, originalMousePosition.y);
       context.lineTo(newMousePosition.x, newMousePosition.y);
       context.closePath();
-      
       context.stroke();
     }
-  }, [color]);
+}, [color, isEraser]);
 
   const paint = useCallback(
     (event) => {
       if (isPainting) {
         const newMousePosition = getCoordinates(event);
-        console.log(`x:${mousePosition.x} and y: ${mousePosition.y}`); //co ordinates of drawing lines is here. not saved in state. Only saved in the ref.
+        //console.log(`x:${mousePosition.x} and y: ${mousePosition.y}`); //co ordinates of drawing lines is here. not saved in state. Only saved in the ref.
         if (mousePosition && newMousePosition) {
           drawLine(mousePosition, newMousePosition);
           setMousePosition(newMousePosition);

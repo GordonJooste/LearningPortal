@@ -14,6 +14,7 @@ export default function SinglePage(props) {
   const [pageNumber, setPageNumber] = useState(1);
   const [showCountdown, setShowCountdown] = useState(false);
   const [showStopwatch, setShowStopwatch] = useState(false);
+  const [isEraser, setIsEraser] = useState(false);
   const [pdfHeight, setPdfHeight] = useState(0);
   const canvasRef = useRef(null);
 
@@ -37,7 +38,6 @@ export default function SinglePage(props) {
     setPageNumber((prevPageNumber) => Math.min(prevPageNumber + 1, numPages || 1));
   }, [numPages]);
 
-  // Add this effect to track PDF height
   useEffect(() => {
     const updateDimensions = () => {
       const pdfElement = document.querySelector('.pdf-page');
@@ -46,17 +46,40 @@ export default function SinglePage(props) {
         console.log('PDF height:', pdfElement.scrollHeight);
       }
     };
+  
+    // Create an observer to watch for changes in the PDF element
+    const observer = new MutationObserver((mutations) => {
+      updateDimensions();
+    });
+  
+    // Start observing the PDF container
+    const pdfContainer = document.querySelector('.pdf-container');
+    if (pdfContainer) {
+      observer.observe(pdfContainer, {
+        childList: true,
+        subtree: true,
+        attributes: true
+      });
+    }
     
     updateDimensions();
     window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
-  }, [numPages]);
+  
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', updateDimensions);
+    };
+  }, [pageNumber]);
 
   // Handle erase button click
   const handleErase = useCallback(() => {
     if (canvasRef.current) {
       canvasRef.current.erase(); // Call the erase function via ref
     }
+  }, []);
+
+  const toggleEraser = useCallback(() => {
+    setIsEraser(prev => !prev);
   }, []);
 
   // Memoize the PDF options to prevent re-renders
@@ -84,6 +107,7 @@ export default function SinglePage(props) {
             color={selectedColor}
             width={document.querySelector('.pdf-container')?.clientWidth}
             height={pdfHeight}
+            isEraser={isEraser}
             />
         </div>
       </div>
@@ -130,12 +154,18 @@ export default function SinglePage(props) {
           >
             {showStopwatch ? "Hide Stopwatch" : "Show Stopwatch"}
           </button>
-          <button
-            className="btn btn-danger"
-            onClick={handleErase}
-          >
-            Erase
-          </button>
+            <button
+              className={`btn ${isEraser ? 'btn-warning' : 'btn-secondary'}`}
+              onClick={toggleEraser}
+            >
+              {isEraser ? 'Drawing Mode' : 'Eraser Mode'}
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={handleErase}
+            >
+              Clear All
+            </button>
           </div>
       </div>
       <div className={`countdown-sidebar ${showCountdown ? '' : 'hidden'}`}>
