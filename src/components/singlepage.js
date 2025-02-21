@@ -14,6 +14,7 @@ export default function SinglePage(props) {
   const [pageNumber, setPageNumber] = useState(1);
   const [showCountdown, setShowCountdown] = useState(false);
   const [showStopwatch, setShowStopwatch] = useState(false);
+  const [pdfHeight, setPdfHeight] = useState(0);
   const canvasRef = useRef(null);
 
   // Memoize the color change handler
@@ -36,6 +37,21 @@ export default function SinglePage(props) {
     setPageNumber((prevPageNumber) => Math.min(prevPageNumber + 1, numPages || 1));
   }, [numPages]);
 
+  // Add this effect to track PDF height
+  useEffect(() => {
+    const updateDimensions = () => {
+      const pdfElement = document.querySelector('.pdf-page');
+      if (pdfElement) {
+        setPdfHeight(pdfElement.scrollHeight);
+        console.log('PDF height:', pdfElement.scrollHeight);
+      }
+    };
+    
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, [numPages]);
+
   // Handle erase button click
   const handleErase = useCallback(() => {
     if (canvasRef.current) {
@@ -56,13 +72,20 @@ export default function SinglePage(props) {
 
   return (
     <div className="SinglePage">
-      <Canvas ref={canvasRef} color={selectedColor} />
-      <div className="pdf-container">
-        <PDFViewer
-          pdf={pdf}
-          pageNumber={pageNumber}
-          onDocumentLoadSuccess={onDocumentLoadSuccess}
-        />
+      <div className="pdf-scroll-container">
+        <div className="pdf-container" style={{ position: 'relative' }}>
+          <PDFViewer
+            pdf={pdf}
+            pageNumber={pageNumber}
+            onDocumentLoadSuccess={onDocumentLoadSuccess}
+          />
+          <Canvas 
+            ref={canvasRef} 
+            color={selectedColor}
+            width={document.querySelector('.pdf-container')?.clientWidth}
+            height={pdfHeight}
+            />
+        </div>
       </div>
       <div className="controls form-group">
         <p>

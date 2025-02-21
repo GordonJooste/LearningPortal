@@ -15,6 +15,7 @@ const Canvas = forwardRef(({ width, height, color = 'red', onErase }, ref) => {
   }));
 
   const startPaint = useCallback((event) => {
+    if (event.buttons !== 1) return; // Only draw when left mouse button is held
     const coordinates = getCoordinates(event);
     if (coordinates) {
       setMousePosition(coordinates);
@@ -22,14 +23,23 @@ const Canvas = forwardRef(({ width, height, color = 'red', onErase }, ref) => {
     }
   }, []);
 
+  // Add mouseenter event handler
   useEffect(() => {
-    if (!canvasRef.current) {
-      return;
-    }
+    if (!canvasRef.current) return;
     const canvas = canvasRef.current;
+    
+    const handleMouseEnter = (event) => {
+      if (event.buttons === 1) { // If mouse button is held while entering
+        startPaint(event);
+      }
+    };
+
     canvas.addEventListener('mousedown', startPaint);
+    canvas.addEventListener('mouseenter', handleMouseEnter);
+    
     return () => {
       canvas.removeEventListener('mousedown', startPaint);
+      canvas.removeEventListener('mouseenter', handleMouseEnter);
     };
   }, [startPaint]);
 
@@ -59,7 +69,7 @@ const Canvas = forwardRef(({ width, height, color = 'red', onErase }, ref) => {
     (event) => {
       if (isPainting) {
         const newMousePosition = getCoordinates(event);
-        //console.log(`x:${mousePosition.x} and y: ${mousePosition.y}`); co ordinates of drawing lines is here. not saved in state. Only saved in the ref.
+        console.log(`x:${mousePosition.x} and y: ${mousePosition.y}`); //co ordinates of drawing lines is here. not saved in state. Only saved in the ref.
         if (mousePosition && newMousePosition) {
           drawLine(mousePosition, newMousePosition);
           setMousePosition(newMousePosition);
@@ -104,7 +114,14 @@ const Canvas = forwardRef(({ width, height, color = 'red', onErase }, ref) => {
     }
 
     const canvas = canvasRef.current;
-    return { x: event.pageX - canvas.offsetLeft, y: event.pageY - canvas.offsetTop };
+    const rect = canvas.getBoundingClientRect();
+    const scrollContainer = document.querySelector('.pdf-scroll-container');
+    const containerRect = scrollContainer.getBoundingClientRect();
+  
+  return {
+    x: event.clientX - rect.left,
+    y: event.clientY - rect.top+ scrollContainer.scrollTop
+  };
   };
 
 
