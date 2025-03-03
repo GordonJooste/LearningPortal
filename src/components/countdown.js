@@ -16,6 +16,8 @@ function Countdown() {
           } else {
             clearInterval(intervalId);
             setIsRunning(false);
+            // Play sound when countdown reaches zero
+            playSound();
             return 0;
           }
         });
@@ -61,6 +63,11 @@ function Countdown() {
     const formattedSeconds = seconds.toString().padStart(2, '0');
 
     return `${formattedMinutes}:${formattedSeconds}`;
+  };
+
+  const playSound = () => {
+    const audio = new Audio('https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3'); // Replace with your sound file URL
+    audio.play();
   };
 
   return (
