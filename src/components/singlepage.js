@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useRef, useMemo, useEffect } from "react";
-import { Document, Page } from "react-pdf";
-import Canvas from "./Canvas";
+import Canvas from "./gateCanvas";
 import Countdown from "./countdown";
 import Stopwatch from "./stopwatch";
 import PDFViewer from "./pdfViewer"; 
@@ -96,10 +95,10 @@ export default function SinglePage(props) {
 
   const { pdf } = props;
   const colors = useMemo(() => [
-    { name: 'Red', value: 'red' },
-    { name: 'Blue', value: 'blue' },
-    { name: 'Green', value: 'green' },
-    { name: 'Black', value: 'black' }
+    { name: 'R', value: 'red' },
+    { name: 'B', value: 'blue' },
+    { name: 'G', value: 'green' },
+    { name: 'B', value: 'black' }
   ], []);
 
   return (
@@ -122,53 +121,9 @@ export default function SinglePage(props) {
         </div>
       </div>
       <div className="controls form-group">
-        <p>
-          Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}
-        </p>
+        
         <div className="button-group">
-          <button className="btn btn-primary" type="button" disabled={pageNumber <= 1} onClick={previousPage}>
-            Previous
-          </button>
-          <button
-            className="btn btn-primary"
-            type="button"
-            disabled={pageNumber >= numPages}
-            onClick={nextPage}
-          >
-            Next
-          </button>
-          <div className="color-controls">
-            {colors.map((color) => (
-              <button
-                key={color.value}
-                className="btn btn-primary color-btn"
-                style={{
-                  backgroundColor: color.value,
-                  margin: '0 5px'
-                }}
-                onClick={() => handleColorChange(color.value)}
-              >
-                {color.name}
-              </button>
-            ))}
-          </div>
-          <div className="pen-size-controls" style={{ display: 'inline-block', margin: '0 10px' }}>
-            <button
-              className="btn btn-primary"
-              onClick={increasePenSize}
-              style={{ margin: '0 5px' }}
-            >
-              +
-            </button>
-            <span style={{ margin: '0 5px' }}>Size: {penSize}</span>
-            <button
-              className="btn btn-primary"
-              onClick={decreasePenSize}
-              style={{ margin: '0 5px' }}
-            >
-              -
-            </button>
-          </div>
+          
           <button
             className="btn btn-secondary"
             onClick={() => setShowCountdown(!showCountdown)}
@@ -181,6 +136,39 @@ export default function SinglePage(props) {
           >
             {showStopwatch ? "Hide Stopwatch" : "Show Stopwatch"}
           </button>
+          <div className="pen-controls">
+            <div className="color-controls">
+              {colors.map((color) => (
+                <button
+                  key={color.value}
+                  className="btn btn-primary color-btn"
+                  style={{
+                    backgroundColor: color.value,
+                    margin: '0 5px'
+                  }}
+                  onClick={() => handleColorChange(color.value)}
+                >
+                  {color.name}
+                </button>
+              ))}
+            </div>
+            <div className="pen-size-controls" style={{ display: 'inline-block', margin: '0 10px' }}>
+              <button
+                className="btn btn-primary"
+                onClick={increasePenSize}
+                style={{ margin: '0 5px' }}
+              >
+                +
+              </button>
+              <span style={{ margin: '0 5px' }}>Size: {penSize}</span>
+              <button
+                className="btn btn-primary"
+                onClick={decreasePenSize}
+                style={{ margin: '0 5px' }}
+              >
+                -
+              </button>
+            </div>
             <button
               className={`btn ${isEraser ? 'btn-warning' : 'btn-secondary'}`}
               onClick={toggleEraser}
@@ -194,6 +182,23 @@ export default function SinglePage(props) {
               Clear All
             </button>
           </div>
+          <div className = "page-controls">
+            <p>
+              Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}
+            </p>
+            <button className="btn btn-primary" type="button" disabled={pageNumber <= 1} onClick={previousPage}>
+              Previous
+            </button>
+            <button
+              className="btn btn-primary"
+              type="button"
+              disabled={pageNumber >= numPages}
+              onClick={nextPage}
+            >
+              Next
+            </button>
+          </div>
+        </div>
       </div>
       <div className={`countdown-sidebar ${showCountdown ? '' : 'hidden'}`}>
         <Countdown key="countdown" /> {}
