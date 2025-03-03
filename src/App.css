@@ -271,7 +271,7 @@ z-index: 2; /* Adjust the z-index to control the stacking order */
 }
 
 .page-controls {
-  margin-top: 270%; /* Push to the bottom */
+  margin-top: 220%; /* Push to the bottom */
   text-align: center;
 }
 

@@ -2,13 +2,13 @@ import React, { useState, useCallback, useRef, useMemo, useEffect } from "react"
 import Canvas from "./gateCanvas";
 import Countdown from "./countdown";
 import Stopwatch from "./stopwatch";
-import PDFViewer from "./pdfViewer"; 
+import PDFViewer from "./pdfViewer";
 import '../App.css';
-
-// Memoize the Document and Page components to prevent unnecessary re-renders
 
 export default function SinglePage(props) {
   const [selectedColor, setSelectedColor] = useState('red');
+  const [highlighterColor, setHighlighterColor] = useState('yellow'); // Default highlighter color
+  const [isHighlighter, setIsHighlighter] = useState(false);
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [showCountdown, setShowCountdown] = useState(false);
@@ -22,6 +22,10 @@ export default function SinglePage(props) {
   const handleColorChange = useCallback((newColor) => {
     console.log('Color change requested to:', newColor);
     setSelectedColor(newColor);
+  }, []);
+
+  const handleHighlighterColorChange = useCallback((newColor) => {
+    setHighlighterColor(newColor);
   }, []);
 
   // Memoize the document load success handler
@@ -54,12 +58,12 @@ export default function SinglePage(props) {
         console.log('PDF height:', pdfElement.scrollHeight);
       }
     };
-  
+
     // Create an observer to watch for changes in the PDF element
     const observer = new MutationObserver((mutations) => {
       updateDimensions();
     });
-  
+
     // Start observing the PDF container
     const pdfContainer = document.querySelector('.pdf-container');
     if (pdfContainer) {
@@ -69,10 +73,10 @@ export default function SinglePage(props) {
         attributes: true
       });
     }
-    
+
     updateDimensions();
     window.addEventListener('resize', updateDimensions);
-  
+
     return () => {
       observer.disconnect();
       window.removeEventListener('resize', updateDimensions);
@@ -90,6 +94,10 @@ export default function SinglePage(props) {
     setIsEraser(prev => !prev);
   }, []);
 
+  const toggleHighlighter = useCallback(() => {
+    setIsHighlighter(prev => !prev);
+  }, []);
+
   // Memoize the PDF options to prevent re-renders
   const pdfOptions = useMemo(() => ({ workerSrc: "/pdf.worker.js" }), []);
 
@@ -101,6 +109,12 @@ export default function SinglePage(props) {
     { name: 'B', value: 'black' }
   ], []);
 
+  const highlighterColors = useMemo(() => [
+    { name: 'Y', value: 'yellow' },
+    { name: 'L', value: 'lime' },
+    { name: 'C', value: 'cyan' },
+  ], []);
+
   return (
     <div className="SinglePage">
       <div className="pdf-scroll-container">
@@ -110,20 +124,22 @@ export default function SinglePage(props) {
             pageNumber={pageNumber}
             onDocumentLoadSuccess={onDocumentLoadSuccess}
           />
-          <Canvas 
-            ref={canvasRef} 
+          <Canvas
+            ref={canvasRef}
             color={selectedColor}
+            highlighterColor={highlighterColor}
             width={document.querySelector('.pdf-container')?.clientWidth}
             height={pdfHeight}
             isEraser={isEraser}
+            isHighlighter={isHighlighter}
             penSize={penSize}
-            />
+          />
         </div>
       </div>
       <div className="controls form-group">
-        
+
         <div className="button-group">
-          
+
           <button
             className="btn btn-secondary"
             onClick={() => setShowCountdown(!showCountdown)}
@@ -175,6 +191,27 @@ export default function SinglePage(props) {
             >
               {isEraser ? 'Drawing Mode' : 'Eraser Mode'}
             </button>
+            <div className="highlighter-controls">
+              {highlighterColors.map((color) => (
+                <button
+                  key={color.value}
+                  className="btn btn-primary color-btn"
+                  style={{
+                    backgroundColor: color.value,
+                    margin: '0 5px'
+                  }}
+                  onClick={() => handleHighlighterColorChange(color.value)}
+                >
+                  {color.name}
+                </button>
+              ))}
+            </div>
+            <button
+              className={`btn ${isHighlighter ? 'btn-info' : 'btn-secondary'}`}
+              onClick={toggleHighlighter}
+            >
+              {isHighlighter ? 'Pen Mode' : 'Highlighter Mode'}
+            </button>
             <button
               className="btn btn-danger"
               onClick={handleErase}
@@ -182,7 +219,7 @@ export default function SinglePage(props) {
               Clear All
             </button>
           </div>
-          <div className = "page-controls">
+          <div className="page-controls">
             <p>
               Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}
             </p>
